@@ -5,8 +5,9 @@
 #ifndef FT_SSL
 # define FT_SSL
 
-#include "libft/libft.h"
+# include "libft/libft.h"
 
 int		my_base64(int argc, char **argv);
+int		get_flag_args(int argc, char **argv, char *flag);
 
 #endif

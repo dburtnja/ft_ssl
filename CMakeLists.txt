@@ -111,4 +111,4 @@ add_executable(ft_ssl
         libft/libft.h
         libft/modulo.c
         libft/swap_nodes.c
-        main.c ft_ssl.h my_base64.c)
+        main.c ft_ssl.h my_base64.c get_flag_args.c)
