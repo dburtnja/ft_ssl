@@ -20,15 +20,26 @@ static int  encode(int in_fd, int out_fd)
             result[read_bytes] = '=';
         }
         ft_putstr_fd(result, out_fd);
-        if (read_bytes != 3)
+        if (read_bytes < 3)
             return (0);
     }
+	ft_putendl_fd("", out_fd);
     return (0);
 }
 
 static int  decode(int in_fd, int out_fd)
 {
+	ssize_t	read_bytes;
+	char	buf[5];
+	char	result[4];
 
+	while ((read_bytes = read(in_fd, &buf[0], 4)) > 0)
+	{
+		ft_putendl(buf);
+		if (read_bytes < 4)
+			return (0);
+	}
+	return (0);
 }
 
 static int  run(int argc, char **argv, int in_fd, int out_fd)
@@ -55,7 +66,7 @@ static int my_open(int argc, char **argv, int flag_nbr, int open_flag)
     flag_arg_nbr = flag_nbr + 1;
     if (argc <= flag_arg_nbr)
         return (-ft_printf("ft_ssl: Error: no required argument after %s flag\n", argv[flag_arg_nbr]));
-    if ((fd = open(argv[flag_arg_nbr], open_flag)) < 0)
+    if ((fd = open(argv[flag_arg_nbr], open_flag, 0666)) < 0)
         return (-ft_printf("ft_ssl: Error: could'nt open file '%s'\n", argv[flag_arg_nbr]));
     return (fd);
 }

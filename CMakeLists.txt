@@ -1,4 +1,4 @@
-# cmake_minimum_required(VERSION <specify CMake version here>)
+cmake_minimum_required(VERSION 3.9)
 project(ft_ssl)
 
 set(CMAKE_CXX_STANDARD 11)
@@ -111,4 +111,7 @@ add_executable(ft_ssl
         libft/libft.h
         libft/modulo.c
         libft/swap_nodes.c
-        main.c ft_ssl.h my_base64.c get_flag_args.c)
+        ft_ssl.h
+        get_flag_args.c
+        main.c
+        my_base64.c)
