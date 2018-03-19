@@ -8,6 +8,7 @@ static int  encode(int in_fd, int out_fd)
     char    result[5];
     ssize_t read_bytes;
 
+	result[4] = 0;
     while ((read_bytes = read(in_fd, &buf[0], 3)) > 0)
     {
         result[0] = BASE64_ARRAY[buf[0] >> 2];
@@ -21,24 +22,38 @@ static int  encode(int in_fd, int out_fd)
         }
         ft_putstr_fd(result, out_fd);
         if (read_bytes < 3)
-            return (0);
+			break ;
     }
 	ft_putendl_fd("", out_fd);
     return (0);
 }
 
+static char	get_char_index(char c)
+{
+	return (char) ft_lentoc(BASE64_ARRAY, c);
+}
+
 static int  decode(int in_fd, int out_fd)
 {
 	ssize_t	read_bytes;
-	char	buf[5];
+	char	*buf;
+	char	ch_buf[5];
 	char	result[4];
 
-	while ((read_bytes = read(in_fd, &buf[0], 4)) > 0)
+	result[3] = 0;
+	while ((read_bytes = read(in_fd, &ch_buf[0], 4)) > 0)
 	{
-		ft_putendl(buf);
+		buf = ft_strmap(ch_buf, &get_char_index);
+		result[0] = (unsigned char)((buf[0] << 2) | ((buf[1] & 48) >> 4));
+		result[1] = (unsigned char)(ch_buf[2] == '=' ? 0 : (buf[1] << 4) | (buf[2]
+				>> 2));
+		result[2] = (unsigned char)(ch_buf[3] == '=' ? 0 : (buf[2] << 6) | buf[3]);
+		ft_putstr_fd(result, out_fd);
+		ft_strdel(&buf);
 		if (read_bytes < 4)
-			return (0);
+			break ;
 	}
+	ft_putendl_fd("", out_fd);
 	return (0);
 }
 
